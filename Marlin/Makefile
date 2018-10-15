@@ -431,6 +431,8 @@ endif
 ifeq ($(U8GLIB), 1)
 VPATH += $(ARDUINO_INSTALL_DIR)/libraries/U8glib
 VPATH += $(ARDUINO_INSTALL_DIR)/libraries/U8glib/utility
+VPATH += ../../u8glib/csrc/
+VPATH += ../../u8glib/sfntsrc/
 endif
 
 ifeq ($(HARDWARE_VARIANT), arduino)
