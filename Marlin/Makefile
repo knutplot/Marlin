@@ -449,7 +449,7 @@ endif
 SRC = wiring.c \
 	wiring_analog.c wiring_digital.c \
 	wiring_pulse.c \
-	wiring_shift.c WInterrupts.c hooks.c
+	wiring_shift.c WInterrupts.c
 ifeq ($(HARDWARE_VARIANT), Teensy)
 SRC = wiring.c
 VPATH += $(ARDUINO_INSTALL_DIR)/hardware/teensy/cores/teensy
