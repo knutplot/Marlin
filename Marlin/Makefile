@@ -411,11 +411,11 @@ TARGET = $(notdir $(CURDIR))
 
 VPATH = .
 VPATH += $(BUILD_DIR)
-VPATH += $(ARDUINO_INSTALL_DIR)/hardware/arduino/avr/cores/arduino
+VPATH += $(ARDUINO_INSTALL_DIR)/hardware/arduino/cores/arduino
 
-VPATH += $(ARDUINO_INSTALL_DIR)/hardware/arduino/avr/libraries/SPI
-VPATH += $(ARDUINO_INSTALL_DIR)/hardware/arduino/avr/libraries/SPI/src
-VPATH += $(ARDUINO_INSTALL_DIR)/libraries/LiquidCrystal/src
+VPATH += $(ARDUINO_INSTALL_DIR)/libraries/SPI
+VPATH += $(ARDUINO_INSTALL_DIR)/libraries/SPI/src
+VPATH += $(ARDUINO_INSTALL_DIR)/libraries/LiquidCrystal
 ifeq ($(LIQUID_TWI2), 1)
 VPATH += $(ARDUINO_INSTALL_DIR)/libraries/Wire
 VPATH += $(ARDUINO_INSTALL_DIR)/libraries/Wire/utility
@@ -435,7 +435,7 @@ endif
 
 ifeq ($(HARDWARE_VARIANT), arduino)
 HARDWARE_SUB_VARIANT ?= mega
-VPATH += $(ARDUINO_INSTALL_DIR)/hardware/arduino/avr/variants/$(HARDWARE_SUB_VARIANT)
+VPATH += $(ARDUINO_INSTALL_DIR)/hardware/arduino/variants/$(HARDWARE_SUB_VARIANT)
 else
 ifeq ($(HARDWARE_VARIANT), Sanguino)
 VPATH += $(HARDWARE_DIR)/marlin/avr/variants/sanguino
