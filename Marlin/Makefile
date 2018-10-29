@@ -67,10 +67,10 @@ ARDUINO_VERSION      ?= 105
 AVR_TOOLS_PATH ?=
 
 #Programmer configuration
-UPLOAD_RATE        ?= 57600
-AVRDUDE_PROGRAMMER ?= arduino
+UPLOAD_RATE        ?= 115200
+AVRDUDE_PROGRAMMER ?= avrisp2
 # on most linuxes this will be /dev/ttyACM0 or /dev/ttyACM1
-UPLOAD_PORT        ?= /dev/ttyUSB0
+UPLOAD_PORT        ?= /dev/ttyACM0
 
 #Directory used to build files in, contains all the build files, from object files to the final hex file
 #on linux it is best to put an absolute path like /home/username/tmp .
@@ -510,7 +510,7 @@ OBJDUMP = $(AVR_TOOLS_PATH)avr-objdump
 AR  = $(AVR_TOOLS_PATH)avr-ar
 SIZE = $(AVR_TOOLS_PATH)avr-size
 NM = $(AVR_TOOLS_PATH)avr-nm
-AVRDUDE = avrdude
+AVRDUDE = ../../avrdude/avrdude
 REMOVE = rm -f
 MV = mv -f
 
@@ -552,12 +552,12 @@ LDFLAGS = -lm
 AVRDUDE_PORT = $(UPLOAD_PORT)
 AVRDUDE_WRITE_FLASH = -Uflash:w:$(BUILD_DIR)/$(TARGET).hex:i
 ifeq ($(shell uname -s), Linux)
-AVRDUDE_CONF = /etc/avrdude/avrdude.conf
+AVRDUDE_CONF = ../../avrdude/avrdude.conf
 else
 AVRDUDE_CONF = $(ARDUINO_INSTALL_DIR)/hardware/tools/avr/etc/avrdude.conf
 endif
 AVRDUDE_FLAGS = -D -C$(AVRDUDE_CONF) \
-	-p$(MCU) -P$(AVRDUDE_PORT) -c$(AVRDUDE_PROGRAMMER) \
+	-pm2560 -P$(AVRDUDE_PORT) -c$(AVRDUDE_PROGRAMMER) \
 	-b$(UPLOAD_RATE)
 
 # Define all object files.
