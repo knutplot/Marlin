@@ -7,10 +7,11 @@ This is a specific Version for KNUT.
 
 You can clone or download the Firmware and work on with the Arduino IDE.
 
-Christian Oekermann original project data and more infos are available here:
+More infos and Christian Oekermann's original project data are available here:
+
 http://fablab-bremen.org/knutplotter/
 
-Test
+
 
 This branch can also build on debian, when some dependencies reside in the parent directory.
 
