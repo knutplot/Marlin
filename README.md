@@ -5,7 +5,10 @@
 
 This is a specific Version for KNUT.
 
-This branch can build on debian, when some dependencies reside in the parent directory.
+You can clone or download the Firmware and work on with the Arduino IDE.
+
+
+This branch can also build on debian, when some dependencies reside in the parent directory.
 
 ## Install dependencies
 
