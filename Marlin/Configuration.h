@@ -55,6 +55,12 @@
 // #define FILAMENT_CHANGE_FAST_LOAD_LENGTH 835 - entsprechend der Länge der Bowden Tube
 
 
+//2020-2-13
+// wg Thermal Runaway bei einem besonders kleinen Druck
+//   #define THERMAL_PROTECTION_BED_PERIOD 22    
+//  #define THERMAL_PROTECTION_BED_HYSTERESIS 12 
+
+
 
 //2020-01-21
 //      #define TEMP_SENSOR_CHAMBER 0 // war 1 hat möglicherweise Temperaturschwankungen und damit Thermal Runaway erzeugt
