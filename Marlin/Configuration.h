@@ -1,4 +1,4 @@
-/**
+/** 
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
@@ -19,6 +19,151 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+ 
+ /*
+  * Verbaut:
+  * Motor Nema17; L48mm 3x
+  * Motor Nema17; L40mm 1x
+  * Arduino Mega
+  * Ramps 1.4 Board
+  * Stepper-Driver DRV8825 5x
+  * Display Smart Graphic Controller LCD 12864
+  * DC-Fan 60x60x20mm; 12V
+  * DC-Fan 30x30x10mm; 12V
+  * Endstop-Switch SS5GL
+  * Bondtech Extruder QR 3.0 Universal
+  * HotEnd E3D_V6; 3mm Direct (12V)
+  * Heatbed 300x200mm; 12V
+  * Thermistor 100k
+  * Pulley T2.5; B6; 16 Teeth
+  * Pulley T5; B10; 10 Teeth
+  * Timing Belt T2.5; B6; Length: 2000mm
+  * Timing Belt T5; B10; Length: 1600mm
+  * Bondtech Extruder QR 3.0 LeftHand
+  * DC-Fan 30x30x10mm; 12V
+  * HotEnd E3D_V6; 3mm Bowden (12V)
+  * Heatbed 300x200mm; 12V
+  * Thermistor 100k
+  * Glass-Plate 320x217x4mm (möglicherweise 2,5 mm)
+  * Bowden Tube: Aussendurchmesser 6mm Länge 835mm
+
+  *
+  */
+  
+// Achtung: Wahrscheinlich sind NICHT ALLE Änderungen hier aufgelistet!
+// In Configuration_adv.h
+// #define FILAMENT_CHANGE_FAST_LOAD_LENGTH 835 - entsprechend der Länge der Bowden Tube
+
+// test
+
+//2020-01-21
+//      #define TEMP_SENSOR_CHAMBER 0 // war 1 hat möglicherweise Temperaturschwankungen und damit Thermal Runaway erzeugt
+//      #define BANG_MAX 255   war 250 
+//
+//in Configuration_adv.h:
+//      #if ENABLED(THERMAL_PROTECTION_BED)
+//      #define THERMAL_PROTECTION_BED_PERIOD 20    // Seconds
+//      #define THERMAL_PROTECTION_BED_HYSTERESIS 10 // war 2 Degrees Celsius
+
+//2020-01-17
+// 			#define FILAMENT_CHANGE_FAST_LOAD_LENGTH 854 mm in Configuration_adv.h wieder auf 850 setzen
+// 			#define USER_DESC_3 "Preheat for PETG" in Configuration_adv.h war ABS
+
+//2020-01-17
+// 
+// 			#define DEFAULT_AXIS_STEPS_PER_UNIT  { 161.0,161.0,4267.750,1120 } E0 war auf 1000.9
+// 			#define TEMP_SENSOR_BED 1 // war 0
+// 			#define DEFAULT_NOMINAL_FILAMENT_DIA 2.85 //war 3
+// 			//#define USE_YMIN_PLUG - WAR NCHT AUSKOMMENTIERT
+// 			#define ENDSTOPPULLUP_YMAX //WAR AUSKOMMENTIERT
+//			#define ENDSTOPPULLUP_YMIN //WAR AUSKOMMENTIERT
+//      //#define ENDSTOPPULLUP_ZMIN_PROBE //WAR AUSKOMMENTIERT
+//  		#define PROBE_PT_1_X 10   // war 0
+//		  #define PROBE_PT_2_X 240 // war 260
+// 
+
+
+//2020-01-13 update auf Marlin 1.1.9
+
+//2020-01-11
+//            #define PREHEAT_1_TEMP_HOTEND 200 // war 200 und sollte wieder 215
+//            
+//
+
+//2020-01-06
+//            Z-Stop Taster nach oben gelegt
+//            #define USE_ZMIN_PLUG auskommentiert
+//            #define USE_ZMAX_PLUG
+//            #define Z_HOME_DIR -1 // war 1
+//            Kontakte auf dem RAMPS 1.4 von Z-MAX auf Z-MIN umgesteckt 
+
+
+ 
+//2019-09-09
+//            #define LEVEL_BED_CORNERS
+//            auskommentiert
+//            #define CUSTOM_MACHINE_NAME "KnutPlot V6 FabLab e.V. Single-Bowden-Extruder"
+//
+//2018-04-23 - Autobedlevelling angeschaltet
+//             Bettgröße reduziert
+    
+
+//2018-03-16 - define Z_MAX_POS 295 auf 293 geändert
+//
+//2018-02-02 - tweakt settings for advanced pause
+//             with corrected head-bed-springs to h=295mm
+//           - measured manual bedleveling points:
+//             P1: G1 X5 Y195 F1500
+//             P2: G1 X240 Y195 P1500
+//             P3: G1 X130 Y15 F1500
+//             (P4 X240 Y15)
+//             (P5 X5 Y15)
+//
+
+
+//2018-01-23 - changed again maximum height to match new build-chamber-height
+//             with corrected head-bed-springs to h=296mm
+//           - switched config from marlin 1.1.6 -> 1.1.8
+//           - changed NOZZLE_PARK_FEATURE and ADVANCED_PAUSE_FEATURE
+//             to new implementation of marlin 1.1.8
+//
+//2017-11-27 - changed settings for ADVANCED_PAUSE_FEATURE
+//             until it finally works
+//
+//2017-11-10 - changed settings for ADVANCED_PAUSE_FEATURE
+//             until it initially works
+//
+//2017-10-20 - Fax-Feedrate fuer Z-Achse auf 300 gesetzt
+//           - HOMING_FEEDRATE_Z auf 300 gesetzt
+//           - Max Z-hoehe auf 298mm gesetzt
+//             und Bett von Hand mit Schrauben gelevelt
+//           - Extrusion Prevent auf 2000 gesetzt
+//           - M303 E-1 fuer bett gemacht und werte iengetragen
+//           - M303 E0 fuer Nozzle gemacht und werte einegtragen
+//           - Max Werte fuer Feedrate angepasst, Zmax auf 5
+//
+//2017-10-17 - Config auf Marlin 1.1.6 Level gehoben
+//           - Setze Mintemp for extrusion zurueck auf 170 Grad
+//           - Aktiviere ADVANCED_PAUSE_FEATURE in Configuration_adv.h
+//             um Filamentwechsel zu initiieren
+//           - Deaktiviere Menue für M303 wieder, da werte jetzt drin sind
+//             fest in der Firmware
+//
+//2017-10-16 - Einkommentiert "#define PIDTEMPBED" um PID fuer das Bett zu
+//             ermoeglichen
+//           - Z-Max geaendert auf Z300
+//           - PID fuer E0 Nozzle gemacht und werte eingeragen
+//
+//2017-10-13 - X, Y, Z-Achse kalibriert, Endstops korrekt eingerichtet
+//
+//2017-10-09 - X-und Y- und Z-Achse umgedreht in Software auf dem Board
+//             INVERT_X_DIR, INVERT_Y_DIR, INVERT_Y_DIR
+//           - Max X und Max Y angepasst (300 in Y wegen Dual-Head nicht möglich)
+//             DEFAULT_AXIS_STEPS_PER_UNIT angepasst
+//
+//2017-09-08 - Config durchgegangen, weitermachen bei Movement-Settings
+//
+//
 
 /**
  * Configuration.h
@@ -43,9 +188,6 @@
 //============================= Getting Started =============================
 //===========================================================================
 
-
-
-//TEST
 /**
  * Here are some standard links for getting your machine calibrated:
  *
@@ -84,7 +226,7 @@
 // User-specified version info of this build to display in [Pronterface, etc] terminal window during
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
-#define STRING_CONFIG_H_AUTHOR "(none, default config)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "Fablab Bremen e.V." // Who made the changes.
 #define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
 #define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
@@ -126,7 +268,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 250000
+#define BAUDRATE 115200
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -139,7 +281,7 @@
 
 // Optional custom name for your RepStrap or other custom machine
 // Displayed in the LCD "Ready" message
-//#define CUSTOM_MACHINE_NAME "3D Printer"
+#define CUSTOM_MACHINE_NAME "KnutPlot"
 
 // Define this to set a unique identifier for this printer, (Used by some programs to differentiate between machines)
 // You can use an online service to generate a random UUID. (eg http://www.uuidgenerator.net/version4)
@@ -152,8 +294,7 @@
 #define EXTRUDERS 1
 
 // Generally expected filament diameter (1.75, 2.85, 3.0, ...). Used for Volumetric, Filament Width Sensor, etc.
-#define DEFAULT_NOMINAL_FILAMENT_DIA 3.0
-
+#define DEFAULT_NOMINAL_FILAMENT_DIA 2.85 //war 3
 // For Cyclops or any "multi-extruder" that shares a single nozzle.
 //#define SINGLENOZZLE
 
@@ -313,13 +454,13 @@
  *
  * :{ '0': "Not used", '1':"100k / 4.7k - EPCOS", '2':"200k / 4.7k - ATC Semitec 204GT-2", '3':"Mendel-parts / 4.7k", '4':"10k !! do not use for a hotend. Bad resolution at high temp. !!", '5':"100K / 4.7k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '501':"100K Zonestar (Tronxy X3A)", '6':"100k / 4.7k EPCOS - Not as accurate as Table 1", '7':"100k / 4.7k Honeywell 135-104LAG-J01", '8':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT", '9':"100k / 4.7k GE Sensing AL03006-58.2K-97-G1", '10':"100k / 4.7k RS 198-961", '11':"100k / 4.7k beta 3950 1%", '12':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT (calibrated for Makibox hot bed)", '13':"100k Hisens 3950  1% up to 300°C for hotend 'Simple ONE ' & hotend 'All In ONE'", '20':"PT100 (Ultimainboard V2.x)", '51':"100k / 1k - EPCOS", '52':"200k / 1k - ATC Semitec 204GT-2", '55':"100k / 1k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '60':"100k Maker's Tool Works Kapton Bed Thermistor beta=3950", '66':"Dyze Design 4.7M High Temperature thermistor", '70':"the 100K thermistor found in the bq Hephestos 2", '71':"100k / 4.7k Honeywell 135-104LAF-J01", '147':"Pt100 / 4.7k", '1047':"Pt1000 / 4.7k", '110':"Pt100 / 1k (non-standard)", '1010':"Pt1000 / 1k (non standard)", '-4':"Thermocouple + AD8495", '-3':"Thermocouple + MAX31855 (only for sensor 0)", '-2':"Thermocouple + MAX6675 (only for sensor 0)", '-1':"Thermocouple + AD595",'998':"Dummy 1", '999':"Dummy 2" }
  */
-#define TEMP_SENSOR_0 1
+#define TEMP_SENSOR_0 1 
 #define TEMP_SENSOR_1 0
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
-#define TEMP_SENSOR_BED 0
-#define TEMP_SENSOR_CHAMBER 0
+#define TEMP_SENSOR_BED 1 // war 0
+#define TEMP_SENSOR_CHAMBER 0 // war 1 hat möglicherweise Temperaturschwankungen und damit Thermal Runaway erzeugt
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
 #define DUMMY_THERMISTOR_998_VALUE 25
@@ -332,7 +473,7 @@
 
 // Extruder temperature must be close to target for this long before M109 returns success
 #define TEMP_RESIDENCY_TIME 10  // (seconds)
-#define TEMP_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
+#define TEMP_HYSTERESIS 3       //  (degC) range of +/- temperatures considered "close" to the target one
 #define TEMP_WINDOW     1       // (degC) Window around target to start the residency timer x degC early.
 
 // Bed temperature must be close to target for this long before M190 returns success
@@ -367,7 +508,8 @@
 
 // Comment the following line to disable PID and enable bang-bang.
 #define PIDTEMP
-#define BANG_MAX 255     // Limits current to nozzle while in bang-bang mode; 255=full current
+//TEST T 
+#define BANG_MAX 255     // war 250 Limits current to nozzle while in bang-bang mode; 255=full current
 #define PID_MAX BANG_MAX // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 #if ENABLED(PIDTEMP)
@@ -383,9 +525,17 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
-  #define DEFAULT_Kp 22.2
-  #define DEFAULT_Ki 1.08
-  #define DEFAULT_Kd 114
+// alte werte war
+//  #define DEFAULT_Kp 26.48
+//  #define DEFAULT_Ki 1.66
+//  #define DEFAULT_Kd 105.31
+  
+  
+  #define DEFAULT_Kp 22.79
+  #define DEFAULT_Ki 1.49
+  #define DEFAULT_Kd 87.30
+
+
 
   // MakerGear
   //#define DEFAULT_Kp 7.0
@@ -416,7 +566,7 @@
  * heater. If your configuration is significantly different than this and you don't understand
  * the issues involved, don't use bed PID until someone else verifies that your hardware works.
  */
-//#define PIDTEMPBED
+#define PIDTEMPBED
 
 //#define BED_LIMIT_SWITCHING
 
@@ -430,13 +580,24 @@
 
 #if ENABLED(PIDTEMPBED)
 
-  //#define PID_BED_DEBUG // Sends debug data to the serial port.
+//TEST TEST
+//  #define PID_BED_DEBUG // Sends debug data to the serial port.
+//TEST TEST
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #define DEFAULT_bedKp 10.00
-  #define DEFAULT_bedKi .023
-  #define DEFAULT_bedKd 305.4
+  // Original Werte
+  //#define DEFAULT_bedKp 522.60
+  //#define DEFAULT_bedKi 96.66
+  //#define DEFAULT_bedKd 706.35
+
+
+// mit Steinwolle 3
+#define DEFAULT_bedKp 521.75
+#define DEFAULT_bedKi 89.70
+#define DEFAULT_bedKd 758.69
+
+
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from pidautotune
@@ -464,7 +625,7 @@
  * Note: For Bowden Extruders make this large enough to allow load/unload.
  */
 #define PREVENT_LENGTHY_EXTRUDE
-#define EXTRUDE_MAXLENGTH 200
+#define EXTRUDE_MAXLENGTH 2000
 
 //===========================================================================
 //======================== Thermal Runaway Protection =======================
@@ -494,7 +655,7 @@
 
 // Uncomment one of these options to enable CoreXY, CoreXZ, or CoreYZ kinematics
 // either in the usual order or reversed
-//#define COREXY
+#define COREXY
 //#define COREXZ
 //#define COREYZ
 //#define COREYX
@@ -504,17 +665,15 @@
 //===========================================================================
 //============================== Endstop Settings ===========================
 //===========================================================================
-
 // @section homing
-
 // Specify here all the endstop connectors that are connected to any endstop or probe.
 // Almost all printers will be using one per axis. Probes will use one or more of the
 // extra connectors. Leave undefined any used for non-endstop and non-probe purposes.
 #define USE_XMIN_PLUG
-#define USE_YMIN_PLUG
+//#define USE_YMIN_PLUG //WAR NICHT AUSKOMMENTIERT
 #define USE_ZMIN_PLUG
 //#define USE_XMAX_PLUG
-//#define USE_YMAX_PLUG
+#define USE_YMAX_PLUG
 //#define USE_ZMAX_PLUG
 
 // Enable pullup for all endstops to prevent a floating state
@@ -522,12 +681,12 @@
 #if DISABLED(ENDSTOPPULLUPS)
   // Disable ENDSTOPPULLUPS to set pullups individually
   //#define ENDSTOPPULLUP_XMAX
-  //#define ENDSTOPPULLUP_YMAX
+  #define ENDSTOPPULLUP_YMAX //WAR AUSKOMMENTIERT
   //#define ENDSTOPPULLUP_ZMAX
-  //#define ENDSTOPPULLUP_XMIN
-  //#define ENDSTOPPULLUP_YMIN
-  //#define ENDSTOPPULLUP_ZMIN
-  //#define ENDSTOPPULLUP_ZMIN_PROBE
+  #define ENDSTOPPULLUP_XMIN
+  //#define ENDSTOPPULLUP_YMIN //WAR AUSKOMMENTIERT
+  #define ENDSTOPPULLUP_ZMIN
+  //#define ENDSTOPPULLUP_ZMIN_PROBE //WAR AUSKOMMENTIERT
 #endif
 
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
@@ -611,14 +770,19 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+// Default
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+
+// settings fur KnutPlot vom FabLab Bremen e.V.
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 161.0,161.0,4267.750,1120 } 
+// E0 war 1000.9 plus fehlende 10% = 1100  plus 20 nach einigem experimentieren
 
 /**
  * Default Max Feed Rate (mm/s)
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 50 }
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -712,7 +876,7 @@
  * Use G29 repeatedly, adjusting the Z height at each point with movement commands
  * or (with LCD_BED_LEVELING) the LCD controller.
  */
-//#define PROBE_MANUALLY
+#define PROBE_MANUALLY
 //#define MANUAL_PROBE_START_Z 0.2
 
 /**
@@ -731,9 +895,6 @@
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
  */
 //#define BLTOUCH
-#if ENABLED(BLTOUCH)
-  //#define BLTOUCH_DELAY 375   // (ms) Enable and increase if needed
-#endif
 
 /**
  * Enable one or more of the following if probing seems unreliable.
@@ -779,12 +940,12 @@
  *      O-- FRONT --+
  *    (0,0)
  */
-#define X_PROBE_OFFSET_FROM_EXTRUDER 10  // X offset: -left  +right  [of the nozzle]
-#define Y_PROBE_OFFSET_FROM_EXTRUDER 10  // Y offset: -front +behind [the nozzle]
+#define X_PROBE_OFFSET_FROM_EXTRUDER 23  // X offset: -left  +right  [of the nozzle]
+#define Y_PROBE_OFFSET_FROM_EXTRUDER 0  // Y offset: -front +behind [the nozzle]
 #define Z_PROBE_OFFSET_FROM_EXTRUDER 0   // Z offset: -below +above  [the nozzle]
 
 // Certain types of probes need to stay away from edges
-#define MIN_PROBE_EDGE 10
+#define MIN_PROBE_EDGE 8
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 8000
@@ -846,14 +1007,14 @@
 // @section extruder
 
 #define DISABLE_E false // For all extruders
-#define DISABLE_INACTIVE_EXTRUDER true // Keep only the active extruder enabled.
+#define DISABLE_INACTIVE_EXTRUDER false // Keep only the active extruder enabled.
 
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
+#define INVERT_X_DIR true
 #define INVERT_Y_DIR true
-#define INVERT_Z_DIR false
+#define INVERT_Z_DIR true
 
 // @section extruder
 
@@ -876,14 +1037,14 @@
 // Direction of endstops when homing; 1=MAX, -1=MIN
 // :[-1,1]
 #define X_HOME_DIR -1
-#define Y_HOME_DIR -1
+#define Y_HOME_DIR  1
 #define Z_HOME_DIR -1
 
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 200
-#define Y_BED_SIZE 200
+#define X_BED_SIZE 290
+#define Y_BED_SIZE 210
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -891,7 +1052,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 200
+#define Z_MAX_POS 293
 
 /**
  * Software Endstops
@@ -976,7 +1137,7 @@
  *   leveling in steps so you can manually adjust the Z height at each grid-point.
  *   With an LCD controller the process is guided step-by-step.
  */
-//#define AUTO_BED_LEVELING_3POINT
+#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
 //#define AUTO_BED_LEVELING_UBL
@@ -1010,7 +1171,7 @@
   /**
    * Enable the G26 Mesh Validation Pattern tool.
    */
-  //#define G26_MESH_VALIDATION
+  #define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
     #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
     #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for the G26 Mesh Validation Tool.
@@ -1023,14 +1184,14 @@
 #if ENABLED(AUTO_BED_LEVELING_LINEAR) || ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 3
+  #define GRID_MAX_POINTS_X 2
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
-  //#define LEFT_PROBE_BED_POSITION MIN_PROBE_EDGE
-  //#define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - MIN_PROBE_EDGE)
-  //#define FRONT_PROBE_BED_POSITION MIN_PROBE_EDGE
-  //#define BACK_PROBE_BED_POSITION (Y_BED_SIZE - MIN_PROBE_EDGE)
+  #define LEFT_PROBE_BED_POSITION MIN_PROBE_EDGE 10
+  #define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - MIN_PROBE_EDGE) 230
+  #define FRONT_PROBE_BED_POSITION MIN_PROBE_EDGE 15
+  #define BACK_PROBE_BED_POSITION (Y_BED_SIZE - MIN_PROBE_EDGE) 195
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
@@ -1090,19 +1251,19 @@
  * Override if the automatically selected points are inadequate.
  */
 #if ENABLED(AUTO_BED_LEVELING_3POINT) || ENABLED(AUTO_BED_LEVELING_UBL)
-  //#define PROBE_PT_1_X 15
-  //#define PROBE_PT_1_Y 180
-  //#define PROBE_PT_2_X 15
-  //#define PROBE_PT_2_Y 20
-  //#define PROBE_PT_3_X 170
-  //#define PROBE_PT_3_Y 20
+  #define PROBE_PT_1_X 10   // war 0
+  #define PROBE_PT_1_Y 180
+  #define PROBE_PT_2_X 240 // war 260
+  #define PROBE_PT_2_Y 180
+  #define PROBE_PT_3_X 120
+  #define PROBE_PT_3_Y 10
 #endif
 
 /**
  * Add a bed leveling sub-menu for ABL or MBL.
  * Include a guided procedure if manual probing is enabled.
  */
-//#define LCD_BED_LEVELING
+#define LCD_BED_LEVELING
 
 #if ENABLED(LCD_BED_LEVELING)
   #define MBL_Z_STEP 0.025    // Step size while manually probing Z axis.
@@ -1114,6 +1275,7 @@
 
 #if ENABLED(LEVEL_BED_CORNERS)
   #define LEVEL_CORNERS_INSET 30    // (mm) An inset for corner leveling
+  #define LEVEL_CORNERS_Z_HOP  4.0  // (mm) Move nozzle up before moving between corners
   //#define LEVEL_CENTER_TOO        // Move to the center after the last corner
 #endif
 
@@ -1258,12 +1420,12 @@
 // @section temperature
 
 // Preheat Constants
-#define PREHEAT_1_TEMP_HOTEND 180
-#define PREHEAT_1_TEMP_BED     70
+#define PREHEAT_1_TEMP_HOTEND 220
+#define PREHEAT_1_TEMP_BED     60
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
-#define PREHEAT_2_TEMP_HOTEND 240
-#define PREHEAT_2_TEMP_BED    110
+#define PREHEAT_2_TEMP_HOTEND 230
+#define PREHEAT_2_TEMP_BED     70
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 /**
@@ -1277,7 +1439,7 @@
  *    P1  Raise the nozzle always to Z-park height.
  *    P2  Raise the nozzle by Z-park amount, limited to Z_MAX_POS.
  */
-//#define NOZZLE_PARK_FEATURE
+#define NOZZLE_PARK_FEATURE
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
   // Specify a park position as { X, Y, Z }
@@ -1420,7 +1582,7 @@
  *
  * :['JAPANESE', 'WESTERN', 'CYRILLIC']
  */
-#define DISPLAY_CHARSET_HD44780 JAPANESE
+#define DISPLAY_CHARSET_HD44780 WESTERN // war JAPANESE
 
 /**
  * SD CARD
@@ -1429,7 +1591,7 @@
  * you must uncomment the following option or it won't work.
  *
  */
-//#define SDSUPPORT
+#define SDSUPPORT
 
 /**
  * SD CARD: SPI SPEED
@@ -1532,7 +1694,7 @@
 //
 // Note: Usually sold with a white PCB.
 //
-//#define REPRAP_DISCOUNT_SMART_CONTROLLER
+#define REPRAP_DISCOUNT_SMART_CONTROLLER
 
 //
 // ULTIMAKER Controller.
@@ -1659,7 +1821,7 @@
 // RepRapDiscount FULL GRAPHIC Smart Controller
 // http://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller
 //
-//#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
 
 //
 // ReprapWorld Graphical LCD
