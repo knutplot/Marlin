@@ -98,8 +98,8 @@
  * Thermal Protection parameters for the bed are just as above for hotends.
  */
 #if ENABLED(THERMAL_PROTECTION_BED)
-  #define THERMAL_PROTECTION_BED_PERIOD 22    // Seconds
-  #define THERMAL_PROTECTION_BED_HYSTERESIS 12 // war 2 dann 10 Degrees Celsius
+  #define THERMAL_PROTECTION_BED_PERIOD 30    // Seconds
+  #define THERMAL_PROTECTION_BED_HYSTERESIS 15 // war 2 dann 10 dann 15 Degrees Celsius
 
   /**
    * As described above, except for the bed (M140/M190/M303).

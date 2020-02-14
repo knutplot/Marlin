@@ -57,6 +57,12 @@
 
 //2020-2-13
 // wg Thermal Runaway bei einem besonders kleinen Druck
+//   #define THERMAL_PROTECTION_BED_PERIOD 30    
+//  #define THERMAL_PROTECTION_BED_HYSTERESIS 15
+
+
+//2020-2-13
+// wg Thermal Runaway bei einem besonders kleinen Druck
 //   #define THERMAL_PROTECTION_BED_PERIOD 22    
 //  #define THERMAL_PROTECTION_BED_HYSTERESIS 12 
 
