@@ -1,3 +1,25 @@
+PRINTER
+
+X(Width) 258.0 mm
+Y(Depth) 217.0 mm
+Z(Heigt) 298.0 mm
+
+Buid plate shape Rectangular
+
+G-code Flavor Marlin
+
+PRINTHEAD SETTINGS
+
+X min -20 mm
+Y min -10 mm
+X max 10 mm
+Y max 10 mm
+
+Gantry Height 48.0 mm
+Apply Extruder offsets to GCode  X
+
+
+
 
 Starter G-code
 ;----------------------------------------
@@ -37,3 +59,22 @@ G1 Z+45.5 E-5 X-20 Y-20 F3000  ;move Z up a bit and retract filament even more
 G28 X0 Y0                      ;move X/Y to min endstops, so the head is out of the way
 M84                            ;steppers off
 G90                            ;absolute positioning
+
+
+
+
+
+
+EXTRUDER 1
+NOZZLE SETTINGS
+Nozzle size 0.4 mm
+Compatible material diameter 2.85 mm
+Nozzle offset X 0.00 mm
+Nozzle offset Y 0.00 mm
+Cooling Fan Number 0
+Extruder Start G-code duration 0.0 s
+Extruder End G-code duration 0.0 s
+
+
+
+
